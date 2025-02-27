@@ -15,7 +15,7 @@ describe('getRatingFromDatabase', () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        (MoviesManagement.Services.getMovieIdByImdbId as jest.Mock).mockResolvedValue(mockMovieId);
+        (MoviesManagement.Service.getMovieIdByImdbId as jest.Mock).mockResolvedValue(mockMovieId);
         (Database.getRatingsByMovieId as jest.Mock).mockResolvedValue(mockRatings);
         (Helper.calculateAverageRating as jest.Mock).mockReturnValue(mockAverageRating);
     });
@@ -23,7 +23,7 @@ describe('getRatingFromDatabase', () => {
     it('should return rating when movie exists and has ratings', async () => {
         const result = await getRatingFromDatabase(mockImdbId);
 
-        expect(MoviesManagement.Services.getMovieIdByImdbId).toHaveBeenCalledWith(mockImdbId);
+        expect(MoviesManagement.Service.getMovieIdByImdbId).toHaveBeenCalledWith(mockImdbId);
         expect(Database.getRatingsByMovieId).toHaveBeenCalledWith(mockMovieId);
         expect(Helper.calculateAverageRating).toHaveBeenCalledWith(mockRatings);
         expect(result).toEqual({
@@ -33,11 +33,11 @@ describe('getRatingFromDatabase', () => {
     });
 
     it('should return null when movie is not found', async () => {
-        (MoviesManagement.Services.getMovieIdByImdbId as jest.Mock).mockResolvedValue(null);
+        (MoviesManagement.Service.getMovieIdByImdbId as jest.Mock).mockResolvedValue(null);
 
         const result = await getRatingFromDatabase(mockImdbId);
 
-        expect(MoviesManagement.Services.getMovieIdByImdbId).toHaveBeenCalledWith(mockImdbId);
+        expect(MoviesManagement.Service.getMovieIdByImdbId).toHaveBeenCalledWith(mockImdbId);
         expect(Database.getRatingsByMovieId).not.toHaveBeenCalled();
         expect(result).toBeNull();
     });
@@ -47,7 +47,7 @@ describe('getRatingFromDatabase', () => {
 
         const result = await getRatingFromDatabase(mockImdbId);
 
-        expect(MoviesManagement.Services.getMovieIdByImdbId).toHaveBeenCalledWith(mockImdbId);
+        expect(MoviesManagement.Service.getMovieIdByImdbId).toHaveBeenCalledWith(mockImdbId);
         expect(Database.getRatingsByMovieId).toHaveBeenCalledWith(mockMovieId);
         expect(result).toBeNull();
     });
@@ -57,7 +57,7 @@ describe('getRatingFromDatabase', () => {
 
         const result = await getRatingFromDatabase(mockImdbId);
 
-        expect(MoviesManagement.Services.getMovieIdByImdbId).toHaveBeenCalledWith(mockImdbId);
+        expect(MoviesManagement.Service.getMovieIdByImdbId).toHaveBeenCalledWith(mockImdbId);
         expect(Database.getRatingsByMovieId).toHaveBeenCalledWith(mockMovieId);
         expect(result).toBeNull();
     });
